@@ -34,7 +34,7 @@ body {
   font-size: 1.5em;
   cursor: pointer;
 }
-#display{
+#Output{
   background-color: rgb(127, 25, 52);
   width: 30vw;
   height: 10vh;

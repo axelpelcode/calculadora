@@ -33,7 +33,11 @@ function App() {
 
   return (
     <div className="App">
-      <Display displayedIn={ text.in } displayedOut={ text.out } />
+      <Display 
+        clase={ "Output" } 
+        displayedIn={ text.in } 
+        displayedOut={ text.out } 
+      />
    {/* Operadores */}
       <Boton buttonId="clear" buttonText="AC" click={ eventHandler } />
       <Boton buttonId="add" buttonText="+" click={ eventHandler } />
