@@ -1,38 +1,74 @@
+body {
+  background-color: rgb(225, 193, 243);
+  display: flex;
+  justify-content: center;
+}
 .App {
   text-align: center;
+  background-color: rgb(45, 5, 18);
+  width: 30vw;
+  height: 70vh;
+  padding: 5px;
+  margin-top: 100px;
+  border:2px solid rgb(51, 3, 25);
+  border-bottom:4px solid rgb(51, 3, 25);
+}
+#one, #two, #three, #four, #five, #six, #seven, #eight, #nine, #zero, #decimal {
+  border-radius: 0%;
+  background-color: rgb(214, 213, 214);
+  width: 10vw;
+  height:10vh;
+  font-size: 1.3em;
+  color:rgb(88, 88, 88);
+  cursor: pointer;
+}
+#zero{
+  width: 20vw;
+}
+#equals, #clear, #add, #subtract, #multiply, #divide {
+  background-color:rgb(197, 2, 57);
+  border-color:rgb(243, 125, 158);
+  color:rgb(248, 243, 245);
+  width: 10vw;
+  height: 10vh;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+#display{
+  background-color: rgb(127, 25, 52);
+  width: 30vw;
+  height: 10vh;
+  margin-bottom: 2px;
+  text-align: right;
+  text-justify: center;
+  font-family:'monospace', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;
+}
+.D-input{
+  font-size: 1.3em;
+  color:rgb(238, 189, 67);
+}
+.D-output{
+  color:rgb(255, 255, 255);
+  font-size: 1.6em;
+}
+footer{
+  margin-top:3vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@media( max-width: 720px ){
+  .App{
+    margin-top: 50px;
+    width:75vw;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  #equals, #clear, #add, #subtract, #multiply, #divide, 
+  #one, #two, #three, #four, #five, #six, #seven, #eight, 
+  #nine, #zero, #decimal{
+    width: 25vw;
   }
-  to {
-    transform: rotate(360deg);
+  #zero{
+    width: 50vw;
+  }
+  #display{
+    width: 75vw;
   }
 }
