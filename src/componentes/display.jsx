@@ -1,7 +1,7 @@
 const Display = ({ clase, displayedIn, displayedOut }) =>
     <div id={ clase } >
-        <text id="display" className="D-output">{ displayedOut }</text><br/>
-        <text id="display" className="D-input">{ displayedIn }</text>
+        <div id="display" className="D-output">{ displayedOut }</div><br/>
+        <div id="display" className="D-input">{ displayedIn }</div>
     </div>
 
 export default Display;

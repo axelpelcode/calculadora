@@ -6,9 +6,13 @@ import { evaluate } from 'mathjs';
 
 function App() {
 
-  const [ text, setText ] = useState({ in:"", count:"", out:"" });
+  const [ text, setText ] = useState({ in:"", count:"0", out:"0" });
 
   function eventHandler( val ){
+    const regex = [
+      /^0$|\W0$/,
+      /\.$|.\W$|\d\.\d$/
+    ];
     switch( val ){
       case "AC":
         setText({...text, 
@@ -22,12 +26,33 @@ function App() {
           count: evaluate(text.count), 
           out: text.count + val + evaluate(text.count) });
         break;
+      case "0":
+        if(regex[0].test(text.count)){
+          console.log("Invalid value: 00");
+        } else { 
+          setText({ ...text, 
+            in: val, 
+            count: text.count + val, 
+            out: text.count + val});
+        }
+        break;
+      case ".":
+        if(regex[1].test(text.count)){
+          console.log("Invalid value: ..");
+        } else {
+          setText({ ...text, 
+            in: val, 
+            count: text.count + val, 
+            out: text.count + val});
+        }
+        break;
       default:
         setText({ ...text, 
           in: val, 
           count: text.count + val, 
           out: text.count + val});
     }
+
     console.log(text.in, text.count, text.out);
   };
 

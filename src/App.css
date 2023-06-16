@@ -35,21 +35,27 @@ body {
   cursor: pointer;
 }
 #Output{
+  display: inline-block;
   background-color: rgb(127, 25, 52);
   width: 30vw;
   height: 10vh;
   margin-bottom: 2px;
-  text-align: right;
-  text-justify: center;
   font-family:'monospace', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;
 }
 .D-input{
-  font-size: 1.3em;
+  text-align: right;
+  height:2vh;
+  font-size: 1em;
   color:rgb(238, 189, 67);
 }
 .D-output{
+  display:flex;
+  
+  justify-content: flex-end;
+  text-overflow:ellipsis;
+  height:2vh;
   color:rgb(255, 255, 255);
-  font-size: 1.6em;
+  font-size: 1.3em;
 }
 footer{
   margin-top:3vh;
@@ -68,7 +74,17 @@ footer{
   #zero{
     width: 50vw;
   }
-  #display{
+  #Output{
     width: 75vw;
+  }
+}
+@media ( max-height: 500px ){
+  .D-input{
+    height:0.75vh;
+    font-size: 1.1em;
+  }
+  .D-output{
+    height:0.75vh;
+    font-size: 1.1em;
   }
 }
