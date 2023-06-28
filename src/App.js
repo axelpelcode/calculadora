@@ -1,68 +1,137 @@
 import './App.css';
 import Boton from './componentes/botones';
-import Display from './componentes/display';
 import { useState } from 'react';
-import { evaluate } from 'mathjs';
+import { evaluate, format } from 'mathjs';
 
 function App() {
 
-  const [ text, setText ] = useState({ in:"", count:"0", out:"0" });
+  const [ text, setText ] = useState({ in:"0", count:"", out:"" });
 
   function eventHandler( val ){
     const regex = [
-      /^0$|\W0$/,
-      /\.$|.\W$|\d\.\d$/
+      //regex del caso "0":
+      /^0$|\D0$/, 
+      //regex del caso ".":
+      /[.]$|[.]\d*$/, 
+      //regex del caso operaciones:
+      /[+,/,*]$/, 
+      /\D+-*$/,
+      /[+,/,*]/,
+      //regex del 0 inicial
+      /^0$/
     ];
     switch( val ){
       case "AC":
         setText({...text, 
-          in:"", 
+          in:"0", 
           count:"", 
-          out:"0"});
+          out:""});
         break;
       case "=":
         setText({ ...text, 
-          in: evaluate(text.count), 
-          count: evaluate(text.count), 
-          out: text.count + val + evaluate(text.count) });
+          in: format(evaluate(text.count), 15), 
+          count: format(evaluate(text.count), 15), 
+          out: text.count + val + format(evaluate(text.count), 15)
+         });
         break;
-      case "0":
-        if(regex[0].test(text.count)){
-          console.log("Invalid value: 00");
-        } else { 
+      case "+":
+      case "*":
+      case "/":
+        if(regex[2].test(text.count)){
           setText({ ...text, 
-            in: val, 
-            count: text.count + val, 
-            out: text.count + val});
-        }
-        break;
-      case ".":
-        if(regex[1].test(text.count)){
-          console.log("Invalid value: ..");
+            in: val,
+            count: text.count.replace(regex[2], val),
+            out: text.count.replace(regex[2], val)
+          }) 
+        } else if (regex[3].test(text.count)){
+          setText({ ...text, 
+            in: val,
+            count: text.count.replace(regex[3], val),
+            out: text.count.replace(regex[3], val)
+          }) 
         } else {
           setText({ ...text, 
             in: val, 
             count: text.count + val, 
             out: text.count + val});
-        }
+          }
+        break;
+      case "-":
+        if(text.count.match(regex[3])==="--"){
+          console.log("Invalud value: ---")
+        } else if (/\D-+$/.test(text.count)){
+          setText({ ...text, 
+            in: val,
+            count: text.count.replace(/\D-+$/, val),
+            out: text.count.replace(/\D-+$/, val)
+          }) 
+        } else {
+          setText({ ...text, 
+            in: val, 
+            count: text.count + val, 
+            out: text.count + val});
+          }
+        break;
+      case "0":
+        if(regex[0].test(text.count)){
+          console.log("Invalid value: 00")
+        } else if (/[^0]/.test(text.count)){
+          setText({ ...text, 
+            in: text.in + val, 
+            count: text.count + val, 
+            out: text.count + val});
+          } else {
+            setText({ ...text, 
+              in: val, 
+              count: text.count + val, 
+              out: text.count + val});
+          }
+        break;
+      case ".":
+        regex[1].test(text.count) ?
+          console.log("Invalid value: ..") :
+          setText({ ...text, 
+            in: text.in + val, 
+            count: text.count + val, 
+            out: text.count + val
+          });
         break;
       default:
+        if(regex[4].test(text.in)){ 
+          setText({ ...text, 
+            in: val, 
+            count: text.count + val , 
+            out: text.count + val
+        });
+      } else if (regex[5].test(text.in)){
         setText({ ...text, 
           in: val, 
           count: text.count + val, 
-          out: text.count + val});
+          out: text.count + val
+      });
+      } else if (/=.*$/.test(text.out)){
+        setText({ ...text, 
+          in: val, 
+          count: val, 
+          out: val
+      });
+      } else {
+          setText({ ...text, 
+            in: text.in + val, 
+            count: text.count + val, 
+            out: text.count + val
+          });
+        }
     }
+    // console.clear();
 
     console.log(text.in, text.count, text.out);
   };
 
   return (
     <div className="App">
-      <Display 
-        clase={ "Output" } 
-        displayedIn={ text.in } 
-        displayedOut={ text.out } 
-      />
+      <div className="D-output">{ text.out }</div>
+      <div id="display" className="D-input" >{ text.in }</div>
    {/* Operadores */}
       <Boton buttonId="clear" buttonText="AC" click={ eventHandler } />
       <Boton buttonId="add" buttonText="+" click={ eventHandler } />
